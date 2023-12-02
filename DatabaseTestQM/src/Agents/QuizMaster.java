@@ -22,7 +22,8 @@ public class QuizMaster extends Agent {
             ACLMessage msg = receive();
             if (msg != null && "Start the quiz ...".equals(msg.getContent())) {
                 messageHandler.sendRequest("Send the categories to choose from ...", "databaseAgent");
-            } else {
+            }
+            else {
                 block();
             }
         }
@@ -37,7 +38,7 @@ public class QuizMaster extends Agent {
                 String categorySerialNumber = msg.getContent();
                 System.out.println("Generating Questions of the desired category: " + categorySerialNumber);
                 // Send the serial number to the databaseAgent to retrieve information
-                messageHandler.sendRequest(categorySerialNumber, "databaseAgent");
+                messageHandler.sendRequest("Category "+categorySerialNumber, "databaseAgent");
             } else {
                 block();
             }
@@ -60,4 +61,3 @@ public class QuizMaster extends Agent {
         }
     }
 }
-
