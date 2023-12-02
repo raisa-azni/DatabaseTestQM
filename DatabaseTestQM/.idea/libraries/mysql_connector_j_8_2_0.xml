@@ -1,0 +1,10 @@
+<component name="libraryTable">
+  <library name="mysql-connector-j-8.2.0">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/../../../ENEL 680 Optimization/Project presentation/mysql-connector-j-8.2.0/mysql-connector-j-8.2.0.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../jade/lib/jade.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
