@@ -38,7 +38,7 @@ public class QuizMaster extends Agent {
                 String categorySerialNumber = msg.getContent();
                 System.out.println("Generating Questions of the desired category: " + categorySerialNumber);
                 // Send the serial number to the databaseAgent to retrieve information
-                messageHandler.sendRequest("Category "+categorySerialNumber, "databaseAgent");
+                messageHandler.sendRequest("Category#"+categorySerialNumber, "databaseAgent");
             } else {
                 block();
             }

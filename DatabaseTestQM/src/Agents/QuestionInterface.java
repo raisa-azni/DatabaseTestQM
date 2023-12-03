@@ -29,23 +29,24 @@ public class QuestionInterface extends Agent {
         private boolean done = false;
         public int count = 0;
         public int score = 0;
+        Boolean totalFlag = false;
+        public char sl = 'A';
         @Override
         public void action() {
 
             ACLMessage questionMsg = receive();
             if (questionMsg != null) {
                 String content = questionMsg.getContent();
-                String contentCA = "2"; //questionMsg.getContent();
+
                 if (!"End of Questions".equals(content)) {
-                    //System.out.println(content);
-                   String question = content.split("#")[0].trim();
-                    contentCA = content.split("#")[1].trim();
-                    System.out.println(question);
-                    System.out.println("CA:" +contentCA);
+                    String question = content.split("#")[0].trim();
+                    String contentCA = content.split("#")[1].trim();
+                    System.out.println("\n"+sl+". "+question);
+                    sl++;
+                    //System.out.println("CA:" +contentCA);
                     answerSelection(contentCA);
                 } else {
-                    //System.out.println("These are the available categories.");
-                    //answerSelection();
+                    totalFlag = true;
                     done = true;
                 }
             } else {
@@ -59,14 +60,16 @@ public class QuestionInterface extends Agent {
             String selectedAns = scanner.nextLine();
             if(Objects.equals(contentCA, selectedAns)){
                 count++;
-                score++;
-                System.out.println("Correct Answer");
+                score+=10;
+              //  System.out.println("Correct Answer");
             }else{
                 count++;
-                System.out.println("Wrong Answer");
+                //System.out.println("Wrong Answer");
             }
             if(count >=5 ){
-                System.out.println("Your Points: "+score);
+          //  if(totalFlag ){
+              //  System.out.println("Your Points: "+score);
+                MessageHandler.sendInformD(score+"", "scoreAgent");
                 done();
             }
 

@@ -296,7 +296,8 @@ public class Interface extends Agent {
                 MessageHandler.sendInformD(selectedCategory, "quizmasterAgent");
             } else {
                 System.out.println("Choose from the available categories.");
-                MessageHandler.sendInformD("Invalid category selection", "quizmasterAgent");
+                requestCategorySelection();
+                //MessageHandler.sendInformD("Invalid category selection", "quizmasterAgent");
             }
         }
 

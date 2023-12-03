@@ -116,8 +116,11 @@ public class Database extends Agent {
     private class HandleRetrievingQuestionsBehaviour extends CyclicBehaviour {
         public void action() {
             ACLMessage msg = receive();
-            if (msg != null && "Category 1".equals(msg.getContent())) {
-                sendBiologyQuestionList();
+
+            if (msg != null /*&& "Category 1".equals(msg.getContent())*/) {
+            String content = msg.getContent();
+                String category = content.split("#")[1].trim();
+                sendQuestionList(category);
             }
             else {
                 block();
@@ -125,10 +128,11 @@ public class Database extends Agent {
         }
     }
 
-    private void sendBiologyQuestionList() {
-        String sql = "SELECT questionID, categoryID, questionText, option1, option2, option3, option4, correctAnswer FROM question WHERE categoryID = 1 ORDER BY questionID";
+    private void sendQuestionList(String category) {
 
-        System.out.println("Questions of the desired category: ");
+        String sql = "SELECT questionID, categoryID, questionText, option1, option2, option3, option4, correctAnswer FROM question WHERE categoryID =" +category+ " ORDER BY RAND()";
+
+      // System.out.println(sql);
         try (Connection conn = DriverManager.getConnection(JDBC_URL, USERNAME, PASSWORD);
              PreparedStatement pstmt = conn.prepareStatement(sql);
              ResultSet rs = pstmt.executeQuery()) {
@@ -142,8 +146,8 @@ public class Database extends Agent {
                 String option4 = rs.getString("option4");
                 String correctAnswer = rs.getString("correctAnswer");
                // System.out.println(questionText+"\n");
-                sendMessage(ACLMessage.INFORM, "\n"+questionText + "\n" + "A:"+option1+ "\tB:"+option2+ "\nC:"+option3+ "\tD:"+option4+"#"+correctAnswer, "questionInterface");
-                //sendMessage(ACLMessage.INFORM, correctAnswer, "interface");
+                sendMessage(ACLMessage.INFORM, "\n"+questionText + "\n" + "1:"+option1+ "\n2:"+option2+ "\n3:"+option3+ "\n4:"+option4+"#"+correctAnswer, "questionInterface");
+
             }
 
             sendMessage(ACLMessage.INFORM, "End of Questions", "questionInterface");
